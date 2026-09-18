@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIATA AI - Calidad del Aire y Predicción con ML</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">SIATA<span class="highlight">.AI</span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="#overview">Inicio</a>
+                <a href="#live-data">Estaciones Live</a>
+                <a href="#calculator">Simulador ICA</a>
+                <a href="#ml-models">Machine Learning</a>
+                <a href="#gis-map">Mapa GIS</a>
+            </nav>
+            <a href="#calculator" class="btn-primary">Probar Simulador</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="overview" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="badge">📡 API SIATA en Tiempo Real & Machine Learning</div>
+            <h1>Monitoreo Inteligente del Aire en el <span class="gradient-text">Valle de Aburrá</span></h1>
+            <p>Plataforma avanzada de analítica predictiva, clasificación ICA en tiempo real y georreferenciación ambiental impulsada por Inteligencia Artificial.</p>
+            <div class="hero-actions">
+                <a href="#gis-map" class="btn-primary btn-large">Ver Mapa Interactivo</a>
+                <a href="#live-data" class="btn-secondary btn-large">Estadísticas en Vivo</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <h3 id="total-stations">24+</h3>
+                    <p>Estaciones Activas</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="avg-pm25">14.2</h3>
+                    <p>Promedio PM2.5 (µg/m³)</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="ml-accuracy">94.2%</h3>
+                    <p>Precisión Modelo ML</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Live Data & Analytics -->
+    <section id="live-data" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>📊 Analítica e Indicadores en Tiempo Real</h2>
+                <p>Monitoreo constante de partículas finas $PM_{2.5}$ en Medellín y municipios conurbados.</p>
+            </div>
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3>Distribución de Calidad del Aire (ICA)</h3>
+                    <canvas id="icaChart"></canvas>
+                </div>
+                <div class="glass-card">
+                    <h3>Tendencia Temporal (Últimas Mediciones)</h3>
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive ICA Simulator -->
+    <section id="calculator" class="section alt-bg">
+        <div class="container">
+            <div class="section-title">
+                <h2>🧮 Simulador e Calculadora de Riesgo ICA</h2>
+                <p>Introduce la concentración medida para obtener el diagnóstico normativo de salud en tiempo real.</p>
+            </div>
+            <div class="calc-box glass-card">
+                <div class="calc-input-group">
+                    <label for="pm25-input">Concentración PM2.5 (µg/m³):</label>
+                    <input type="number" id="pm25-input" value="18.5" min="0" max="500" step="0.1">
+                    <button id="calc-btn" class="btn-primary">Calcular Estado</button>
+                </div>
+                <div class="calc-result" id="calc-result">
+                    <div class="ica-badge" id="ica-badge-status" style="background-color: #F59E0B;">
+                        MODERADA
+                    </div>
+                    <div class="result-details">
+                        <h3 id="result-title">Riesgo Moderado</h3>
+                        <p id="result-desc">La calidad del aire es aceptable. Sin embargo, puede haber cierta preocupación para un número muy reducido de personas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine Learning Section -->
+    <section id="ml-models" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>🤖 Modelos de Machine Learning</h2>
+                <p>Algoritmos entrenados para la predicción de crisis ambientales y alerta temprana.</p>
+            </div>
+            <div class="grid-3">
+                <div class="glass-card ml-card">
+                    <div class="ml-icon">🌲</div>
+                    <h3>Random Forest Regressor</h3>
+                    <p>Pronostica la concentración continua de PM2.5 para las próximas 6 horas según patrones espaciales.</p>
+                    <div class="metric">R² Score: <strong>0.894</strong></div>
+                </div>
+                <div class="glass-card ml-card">
+                    <div class="ml-icon">⚡</div>
+                    <h3>XGBoost Classifier</h3>
+                    <p>Clasifica preventivamente la categoría ICA en 6 niveles normativos para alertas de salud pública.</p>
+                    <div class="metric">Accuracy: <strong>94.2%</strong></div>
+                </div>
+                <div class="glass-card ml-card">
+                    <div class="ml-icon">🗺️</div>
+                    <h3>Interpolación Kriging</h3>
+                    <p>Estima concentraciones de contaminantes en puntos sin estaciones de monitoreo instaladas.</p>
+                    <div class="metric">Resolución: <strong>100m</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIS Map Section -->
+    <section id="gis-map" class="section alt-bg">
+        <div class="container">
+            <div class="section-title">
+                <h2>🗺️ Georreferenciación Ambiental GIS</h2>
+                <p>Estaciones de monitoreo y mapa térmico del Valle de Aburrá en vivo.</p>
+            </div>
+            <div class="glass-card map-card">
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>© 2026 SIATA AI Project - Plataforma de Machine Learning Ambiental.</p>
+            <p>Desarrollado para el Parcial 1 de Introducción al Machine Learning.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
